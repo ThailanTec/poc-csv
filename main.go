@@ -7,30 +7,32 @@ import (
 	"strconv"
 )
 
-// Dados da estrutura de exemplo
 type Dados struct {
-	Nome   string
-	Idade  int
-	Cidade string
+	Nome    string
+	Idade   int
+	Cidade  string
+	Empresa string
 }
 
 func main() {
-	// Suponha que você tenha uma função que consulta os dados do banco de dados e retorna uma slice de structs
 	dadosDoBanco := consultarDadosDoBanco()
 
-	// Chame a função para salvar os dados em um arquivo CSV
 	err := salvarDadosCSV("empresa"+".csv", dadosDoBanco)
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
-// Função para consultar os dados do banco de dados (substitua com sua lógica real)
 func consultarDadosDoBanco() []Dados {
-	// Lógica para consultar os dados do banco de dados e retornar uma slice de structs
 	return []Dados{
-		{"João", 30, "São Paulo"},
-		{"Maria", 25, "Rio de Janeiro"},
+		{"João", 30, "São Paulo", "Itau"},
+		{"Maria", 25, "Rio de Janeiro", "Bradesco"},
+		{"Maria", 25, "Rio de Janeiro", "Loud"},
+		{"Cleiton", 25, "Rio de Janeiro", "Furia"},
+		{"John", 25, "Rio de Janeiro", "Imperial"},
+		{"Clebin", 25, "Rio de Janeiro", "Brastemp"},
+		{"Calton", 25, "Rio de Janeiro", "Serasa"},
+		{"Mirley", 25, "Rio de Janeiro", "SBT"},
 	}
 }
 
@@ -44,14 +46,13 @@ func salvarDadosCSV(nomeArquivo string, dados []Dados) error {
 	escritor := csv.NewWriter(arquivo)
 	defer escritor.Flush()
 
-	// Escreva o cabeçalho do CSV
-	err = escritor.Write([]string{"Nome", "Idade", "Cidade"})
+	err = escritor.Write([]string{"Nome", "Idade", "Cidade", "Empresa"})
 	if err != nil {
 		return err
 	}
 
 	for _, dado := range dados {
-		err := escritor.Write([]string{dado.Nome, strconv.Itoa(dado.Idade), dado.Cidade})
+		err := escritor.Write([]string{dado.Nome, strconv.Itoa(dado.Idade), dado.Cidade, dado.Empresa})
 		if err != nil {
 			return err
 		}
